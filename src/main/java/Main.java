@@ -1,32 +1,36 @@
+import java.util.Random;
 public class Main {
-
     static char[][] board = {
             {'-', '-', '-'},
             {'-', '-', '-'},
             {'-', '-', '-'}
     };
-
+    static char computerSymbol = 'O';
     public static void main(String[] args) {
-        System.out.println(isValidMove(1, 1)); // true
-        System.out.println(isValidMove(3, 0)); // false (out of bounds)
-
-        board[1][1] = 'X';
-        System.out.println(isValidMove(1, 1)); // false (already filled)
+        computerMove();
+        printBoard();
     }
-
-    // UC5: Validate move
-    static boolean isValidMove(int row, int col) {
-
-        // 1. Check bounds
-        if (row < 0 || row > 2 || col < 0 || col > 2) {
-            return false;
+    static void computerMove() {
+        Random rand = new Random();
+        int slot;
+        int row, col;
+        while (true) {
+            slot = rand.nextInt(9) + 1;
+            row = (slot - 1) / 3;
+            col = (slot - 1) % 3;
+            if (board[row][col] == '-') {
+                board[row][col] = computerSymbol;
+                System.out.println("Computer chose slot: " + slot);
+                break;
+            }
         }
-
-        // 2. Check if cell is empty
-        if (board[row][col] != '-') {
-            return false;
+    }
+    static void printBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
         }
-
-        return true;
     }
 }
