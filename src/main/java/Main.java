@@ -1,31 +1,32 @@
-public class Main{
+public class Main {
 
-    // Main method
+    static char[][] board = {
+            {'-', '-', '-'},
+            {'-', '-', '-'},
+            {'-', '-', '-'}
+    };
+
     public static void main(String[] args) {
+        System.out.println(isValidMove(1, 1)); // true
+        System.out.println(isValidMove(3, 0)); // false (out of bounds)
 
-        int slot = 7; // Example input (can change 1–9)
-
-        int row = getRowFromSlot(slot);
-        int col = getColFromSlot(slot);
-
-        System.out.println("Slot: " + slot);
-        System.out.println("Row: " + row);
-        System.out.println("Column: " + col);
+        board[1][1] = 'X';
+        System.out.println(isValidMove(1, 1)); // false (already filled)
     }
 
-    // Method to get row index
-    static int getRowFromSlot(int slot) {
-        if (slot < 1 || slot > 9) {
-            throw new IllegalArgumentException("Slot must be between 1 and 9");
-        }
-        return (slot - 1) / 3;
-    }
+    // UC5: Validate move
+    static boolean isValidMove(int row, int col) {
 
-    // Method to get column index
-    static int getColFromSlot(int slot) {
-        if (slot < 1 || slot > 9) {
-            throw new IllegalArgumentException("Slot must be between 1 and 9");
+        // 1. Check bounds
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
         }
-        return (slot - 1) % 3;
+
+        // 2. Check if cell is empty
+        if (board[row][col] != '-') {
+            return false;
+        }
+
+        return true;
     }
 }
