@@ -1,33 +1,32 @@
-import java.util.Random;
 public class Main {
-    static boolean isHumanTurn;
-    static char humanSymbol;
-    static char computerSymbol;
+
+    static char[][] board = {
+            {'-', '-', '-'},
+            {'-', '-', '-'},
+            {'-', '-', '-'}
+    };
+
     public static void main(String[] args) {
-        tossAndAssignSymbols();
-        displayTossResult();
+        System.out.println(isValidMove(1, 1)); // true
+        System.out.println(isValidMove(3, 0)); // false (out of bounds)
+
+        board[1][1] = 'X';
+        System.out.println(isValidMove(1, 1)); // false (already filled)
     }
-    static void tossAndAssignSymbols() {
-        Random random = new Random();
-        int toss = random.nextInt(2);
-        if (toss == 0) {
-            isHumanTurn = true;
-            humanSymbol = 'X';
-            computerSymbol = 'O';
-        } else {
-            isHumanTurn = false;
-            humanSymbol = 'O';
-            computerSymbol = 'X';
-        }
-    }
-    static void displayTossResult() {
-        if (isHumanTurn) {
-            System.out.println("Human won the toss and will play first.");
-        } else {
-            System.out.println("Computer won the toss and will play first.");
+
+    // UC5: Validate move
+    static boolean isValidMove(int row, int col) {
+
+        // 1. Check bounds
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
         }
 
-        System.out.println("Human symbol: " + humanSymbol);
-        System.out.println("Computer symbol: " + computerSymbol);
+        // 2. Check if cell is empty
+        if (board[row][col] != '-') {
+            return false;
+        }
+
+        return true;
     }
 }
